@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Triagem Capilar Gratuita — Daiana Morais Estética</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #C8A96E;
+    --gold-light: #E2C99A;
+    --dark: #0F0F0F;
+    --dark-2: #1A1A1A;
+    --dark-3: #242424;
+    --text: #E8E0D5;
+    --muted: #8A8070;
+    --border: rgba(200, 169, 110, 0.2);
+  }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
+  }
+
+  /* Background texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(200,169,110,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 80% 90%, rgba(200,169,110,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 560px;
+    position: relative;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .badge {
+    display: inline-block;
+    border: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    background: rgba(200,169,110,0.05);
+  }
+
+  .header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.8rem;
+  }
+
+  .header h1 span {
+    color: var(--gold);
+  }
+
+  .header p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+
+  /* Divider */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider span {
+    color: var(--gold);
+    font-size: 1rem;
+  }
+
+  /* Form card */
+  .form-card {
+    background: var(--dark-2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    animation: fadeUp 0.8s ease 0.2s both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Steps indicator */
+  .steps {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+  }
+  .step-dot {
+    height: 3px;
+    flex: 1;
+    border-radius: 2px;
+    background: var(--dark-3);
+    transition: background 0.4s;
+  }
+  .step-dot.active { background: var(--gold); }
+
+  /* Form groups */
+  .form-group {
+    margin-bottom: 1.4rem;
+    display: none;
+    animation: fadeUp 0.4s ease both;
+  }
+  .form-group.visible { display: block; }
+
+  label {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 0.6rem;
+  }
+
+  .required-star { color: var(--gold); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="number"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 300;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    appearance: none;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(200,169,110,0.1);
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8A96E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+  }
+  select option { background: var(--dark-2); }
+
+  textarea { resize: none; min-height: 90px; }
+
+  /* Radio / checkbox options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  .option-item {
+    position: relative;
+  }
+
+  .option-item input[type="radio"],
+  .option-item input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0; height: 0;
+  }
+
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    background: var(--dark-3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    font-size: 0.86rem;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .option-label:hover { border-color: rgba(200,169,110,0.4); }
+
+  .option-item input:checked + .option-label {
+    border-color: var(--gold);
+    background: rgba(200,169,110,0.08);
+    color: var(--gold-light);
+  }
+
+  .option-dot {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--muted);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .option-dot::after {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .option-item input:checked + .option-label .option-dot {
+    border-color: var(--gold);
+  }
+  .option-item input:checked + .option-label .option-dot::after { opacity: 1; }
+
+  /* Checkbox dot — square */
+  .option-item.checkbox .option-dot { border-radius: 4px; }
+  .option-item.checkbox .option-dot::after {
+    content: '✓';
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--gold);
+    background: none;
+    width: auto; height: auto;
+  }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    flex: 1;
+    padding: 0.9rem 1.5rem;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s;
+  }
+
+  .btn-back {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .btn-back:hover { border-color: var(--muted); color: var(--text); }
+
+  .btn-next {
+    background: var(--gold);
+    color: var(--dark);
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-next:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,169,110,0.3); }
+  .btn-next:active { transform: translateY(0); }
+  .btn-next:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* Success screen */
+  #success {
+    text-align: center;
+    display: none;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .success-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.5rem;
+    background: rgba(200,169,110,0.07);
+  }
+
+  #success h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    color: var(--gold-light);
+  }
+
+  #success p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  /* Progress label */
+  .progress-label {
+    text-align: right;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.2rem;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    color: var(--muted);
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .footer span { color: var(--gold); }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 480px) {
+    .form-card { padding: 2rem 1.2rem; }
+    .options-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="badge">Avaliação Gratuita</div>
+    <h1>Seu cabelo está<br><span>afinando ou caindo?</span></h1>
+    <p>Responda algumas perguntas rápidas e descubra se você tem indicação para o nosso tratamento. Leva menos de 2 minutos.</p>
+  </div>
+
+  <div class="divider"><span>✦</span></div>
+
+  <div class="form-card">
+    <div class="steps" id="stepsBar"></div>
+    <div class="progress-label" id="progressLabel"></div>
+
+    <form id="triagemForm">
+
+      <!-- Step 1 -->
+      <div class="form-section" data-step="1">
+        <div class="form-group visible">
+          <label>Seu nome <span class="required-star">*</span></label>
+          <input type="text" name="nome" placeholder="Como prefere ser chamado?" required>
+        </div>
+        <div class="form-group visible">
+          <label>Sua idade <span class="required-star">*</span></label>
+          <input type="number" name="idade" placeholder="Ex: 32" min="18" max="80" required>
+        </div>
+        <div class="form-group visible">
+          <label>WhatsApp para contato <span class="required-star">*</span></label>
+          <input type="tel" name="whatsapp" placeholder="(00) 90000-0000" required>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="form-section" data-step="2" style="display:none">
+        <div class="form-group visible">
+          <label>Há quanto tempo está notando a queda? <span class="required-star">*</span></label>
+          <select name="tempo_queda" required>
+            <option value="" disabled selected>Selecione</option>
+            <option>Menos de 6 meses</option>
+            <option>Entre 6 meses e 1 ano</option>
+            <option>Entre 1 e 3 anos</option>
+            <option>Mais de 3 anos</option>
+          </select>
+        </div>
+        <div class="form-group visible">
+          <label>Onde está caindo mais? <span class="required-star">*</span></label>
+          <div class="options-grid">
+            <div class="option-item">
+              <input type="radio" name="regiao" id="r1" value="Entradas" required>
+              <label class="option-label" for="r1"><span class="option-dot"></span> Entradas</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="regiao" id="r2" value="Topo da cabeça">
+              <label class="option-label" for="r2"><span class="option-dot"></span> Topo da cabeça</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="regiao" id="r3" value="Parte posterior">
+              <label class="option-label" for="r3"><span class="option-dot"></span> Coroa</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="regiao" id="r4" value="Geral/difusa">
+              <label class="option-label" for="r4"><span class="option-dot"></span> Generalizada</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="form-section" data-step="3" style="display:none">
+        <div class="form-group visible">
+          <label>Tem alguém careca na sua família? <span class="required-star">*</span></label>
+          <div class="options-grid">
+            <div class="option-item">
+              <input type="radio" name="historico" id="h1" value="Sim, pelo lado paterno" required>
+              <label class="option-label" for="h1"><span class="option-dot"></span> Sim, lado paterno</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="historico" id="h2" value="Sim, pelo lado materno">
+              <label class="option-label" for="h2"><span class="option-dot"></span> Sim, lado materno</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="historico" id="h3" value="Ambos os lados">
+              <label class="option-label" for="h3"><span class="option-dot"></span> Ambos os lados</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="historico" id="h4" value="Não">
+              <label class="option-label" for="h4"><span class="option-dot"></span> Não</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group visible">
+          <label>Usa ou já usou anabolizantes? <span class="required-star">*</span></label>
+          <div class="options-grid">
+            <div class="option-item">
+              <input type="radio" name="anabolizante" id="a1" value="Sim, uso atualmente" required>
+              <label class="option-label" for="a1"><span class="option-dot"></span> Sim, uso atualmente</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="anabolizante" id="a2" value="Já usei, mas parei">
+              <label class="option-label" for="a2"><span class="option-dot"></span> Já usei, mas parei</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="anabolizante" id="a3" value="Não">
+              <label class="option-label" for="a3"><span class="option-dot"></span> Não</label>
+            </div>
+            <div class="option-item">
+              <input type="radio" name="anabolizante" id="a4" value="Prefiro não informar">
+              <label class="option-label" for="a4"><span class="option-dot"></span> Prefiro não dizer</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group visible">
+          <label>Já usou algum tratamento antes?</label>
+          <div class="options-grid">
+            <div class="option-item checkbox">
+              <input type="checkbox" name="trat" id="t1" value="Minoxidil">
+              <label class="option-label" for="t1"><span class="option-dot"></span> Minoxidil</label>
+            </div>
+            <div class="option-item checkbox">
+              <input type="checkbox" name="trat" id="t2" value="Finasterida">
+              <label class="option-label" for="t2"><span class="option-dot"></span> Finasterida</label>
+            </div>
+            <div class="option-item checkbox">
+              <input type="checkbox" name="trat" id="t3" value="Shampoo especializado">
+              <label class="option-label" for="t3"><span class="option-dot"></span> Shampoo</label>
+            </div>
+            <div class="option-item checkbox">
+              <input type="checkbox" name="trat" id="t4" value="Nenhum">
+              <label class="option-label" for="t4"><span class="option-dot"></span> Nenhum</label>
+            </div>
+            <div class="option-item checkbox">
+              <input type="checkbox" name="trat" id="t5" value="Outros" onchange="toggleOutros(this)">
+              <label class="option-label" for="t5"><span class="option-dot"></span> Outros</label>
+            </div>
+          </div>
+          <input type="text" name="trat_outros" id="tratOutrosInput" placeholder="Qual tratamento?" style="display:none; margin-top:0.6rem;">
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="form-section" data-step="4" style="display:none">
+        <div class="form-group visible">
+          <label>Como está sua queda hoje? <span class="required-star">*</span></label>
+          <select name="intensidade" required>
+            <option value="" disabled selected>Selecione</option>
+            <option>Leve — noto alguns fios no travesseiro ou chuveiro</option>
+            <option>Moderada — cabelo claramente mais ralo</option>
+            <option>Intensa — já aparecem falhas visíveis</option>
+            <option>Avançada — área careca evidente</option>
+          </select>
+        </div>
+        <div class="form-group visible">
+          <label>Algo mais que queira compartilhar?</label>
+          <textarea name="obs" placeholder="Conta mais sobre sua situação, dúvidas ou o que espera do tratamento..."></textarea>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="btn-row">
+      <button class="btn btn-back" id="btnBack" onclick="changeStep(-1)" style="display:none">← Voltar</button>
+      <button class="btn btn-next" id="btnNext" onclick="changeStep(1)">Continuar →</button>
+    </div>
+
+    <!-- Success -->
+    <div id="success">
+      <div class="success-icon">✦</div>
+      <h2>Recebemos suas respostas!</h2>
+      <p>Em breve entraremos em contato pelo WhatsApp para te contar se o tratamento é indicado para o seu caso. Fique de olho! 👀</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    Suas informações são <span>100% confidenciais</span> e usadas apenas para análise clínica.
+  </div>
+
+</div>
+
+<script>
+  const totalSteps = 4;
+  let currentStep = 1;
+
+  // Init steps bar
+  const bar = document.getElementById('stepsBar');
+  for (let i = 1; i <= totalSteps; i++) {
+    const d = document.createElement('div');
+    d.className = 'step-dot' + (i === 1 ? ' active' : '');
+    d.id = 'dot-' + i;
+    bar.appendChild(d);
+  }
+
+  function updateUI() {
+    document.getElementById('progressLabel').textContent = `Etapa ${currentStep} de ${totalSteps}`;
+    document.getElementById('btnBack').style.display = currentStep > 1 ? 'flex' : 'none';
+    document.getElementById('btnNext').textContent = currentStep === totalSteps ? 'Enviar ✦' : 'Continuar →';
+
+    for (let i = 1; i <= totalSteps; i++) {
+      const dot = document.getElementById('dot-' + i);
+      dot.classList.toggle('active', i <= currentStep);
+    }
+  }
+
+  function showSection(step) {
+    document.querySelectorAll('.form-section').forEach(s => {
+      s.style.display = parseInt(s.dataset.step) === step ? 'block' : 'none';
+    });
+  }
+
+  function validateStep(step) {
+    const section = document.querySelector(`.form-section[data-step="${step}"]`);
+    const required = section.querySelectorAll('[required]');
+    for (const el of required) {
+      if (el.type === 'radio') {
+        const group = section.querySelectorAll(`[name="${el.name}"]`);
+        if (![...group].some(r => r.checked)) return false;
+      } else if (!el.value.trim()) return false;
+    }
+    return true;
+  }
+
+  function changeStep(dir) {
+    if (dir === 1 && !validateStep(currentStep)) {
+      shake();
+      return;
+    }
+
+    if (dir === 1 && currentStep === totalSteps) {
+      submitForm();
+      return;
+    }
+
+    currentStep += dir;
+    showSection(currentStep);
+    updateUI();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function shake() {
+    const card = document.querySelector('.form-card');
+    card.style.animation = 'none';
+    card.style.transform = 'translateX(-6px)';
+    setTimeout(() => card.style.transform = 'translateX(6px)', 80);
+    setTimeout(() => card.style.transform = 'translateX(-4px)', 160);
+    setTimeout(() => card.style.transform = 'translateX(0)', 240);
+  }
+
+  function submitForm() {
+    document.getElementById('triagemForm').style.display = 'none';
+    document.querySelector('.btn-row').style.display = 'none';
+    document.getElementById('stepsBar').style.display = 'none';
+    document.getElementById('progressLabel').style.display = 'none';
+    document.getElementById('success').style.display = 'block';
+
+    // Fill all step dots as active
+    for (let i = 1; i <= totalSteps; i++) {
+      document.getElementById('dot-' + i).classList.add('active');
+    }
+  }
+
+  function toggleOutros(el) {
+    const input = document.getElementById('tratOutrosInput');
+    input.style.display = el.checked ? 'block' : 'none';
+  }
+
+  // Init
+  showSection(1);
+  updateUI();
+</script>
+</body>
+</html>
